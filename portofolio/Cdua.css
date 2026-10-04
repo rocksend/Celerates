@@ -1,0 +1,119 @@
+*,html,body{
+    padding: 0;
+    margin:0;
+    box-sizing: border-box;
+    font-family: "Poppins",sans-serif;
+}
+
+body
+{
+    background-color:black;
+}
+
+nav{
+    background-color:black;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2%;
+}
+
+a:hover{
+background-color:white;
+color: black;
+}
+
+a{
+     color: white;
+    margin: 15px;
+    font-family: "Poppins", sans-serif;
+    font-optical-sizing: auto;
+    font-weight:bold;
+    font-style: normal;
+    font-size: larger;
+}
+
+
+.gambarRaka{
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+    width: 100;
+}
+.berkas1{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.foto1{
+    display: flex;
+    justify-content: center;
+}
+
+.berkas1{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.foto2{
+    display: flex;
+    justify-content: center;
+}
+
+.fotoprojek1{
+    padding: 20px 0;
+    width: 50%;
+    weight: 50%;
+    object-fit: cover;
+}
+
+.fotoprojek2{
+    padding: 20px 0;
+    width: 50%;
+    weight: 50%;
+    object-fit: cover;
+}
+
+.teksgambar1{
+    padding: 0 50px 0 50px;
+    text-align: justify;
+    color: white;
+}
+
+.teksgambar2{
+    padding: 0 50px 0 50px;
+    text-align: justify;
+    color: white;
+}
+
+.Nama1{
+    margin: 10px 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: larger;
+}
+
+.deskripsi1{
+    display: flex;
+    margin: 0 20px 0 20px;
+    padding: 0 25% 0 25%;
+    line-height: 1.6;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: large;
+    text-align: justify;
+}
+
+.gambarIcon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    padding: 30px 0 10px 0;
+    gap: 10px;
+}
