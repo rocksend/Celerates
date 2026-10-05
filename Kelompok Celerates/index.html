@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Petshop Sahabat Berbulu - Daftar Produk & Stok</title>
+<style>
+:root{--ink:#23303a;--teal:#0f766e;--orange:#f08a24;--bg:#f6f4ef;--white:#fff;--line:#e0dbd0;--muted:#66727c;--ok:#1f7a4d;--low:#b7791f;--out:#c0392b}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Trebuchet MS","Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+h1,h2,h3{font-family:"Arial Black","Helvetica Neue",Arial,sans-serif;line-height:1.2}
+
+header{background:var(--teal);color:var(--white);padding:36px 0 30px}
+header .wrap{display:flex;align-items:center;gap:24px;flex-wrap:wrap;justify-content:space-between}
+header h1{font-size:clamp(1.6rem,4vw,2.4rem)}
+header p{color:#c9ece8;margin-top:6px;max-width:48ch}
+.legend{display:flex;gap:10px;flex-wrap:wrap;font-size:.85rem}
+.legend span{background:rgba(255,255,255,.14);padding:6px 12px;border-radius:20px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px}
+
+/* filter tanpa JavaScript */
+.vis{position:absolute;opacity:0;pointer-events:none}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:26px 0 20px}
+.tabs label{cursor:pointer;padding:9px 18px;border:2px solid var(--teal);border-radius:24px;font-weight:700;color:var(--teal);background:var(--white)}
+#f-all:checked ~ .tabs [for=f-all],#f-kucing:checked ~ .tabs [for=f-kucing],#f-anjing:checked ~ .tabs [for=f-anjing],
+#f-ikan:checked ~ .tabs [for=f-ikan],#f-aksesori:checked ~ .tabs [for=f-aksesori]{background:var(--teal);color:var(--white)}
+.vis:focus-visible ~ .tabs label{outline:2px dashed var(--orange);outline-offset:2px}
+#f-kucing:checked ~ .grid .p:not(.kucing),#f-anjing:checked ~ .grid .p:not(.anjing),
+#f-ikan:checked ~ .grid .p:not(.ikan),#f-aksesori:checked ~ .grid .p:not(.aksesori){display:none}
+
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;padding-bottom:48px}
+.p{background:var(--white);border:1px solid var(--line);border-radius:10px;overflow:hidden;display:flex;flex-direction:column}
+.p svg{display:block;width:100%;height:130px}
+.c1{background:#fde7c8;color:#f08a24}.c2{background:#d6efeb;color:#0f766e}.c3{background:#e5e1f5;color:#6a5acd}.c4{background:#fbd9d4;color:#c0392b}
+.p .b{padding:14px 16px 16px;display:flex;flex-direction:column;gap:4px;flex:1}
+.p small{color:var(--muted);font-size:.78rem}
+.p h3{font-size:.95rem;font-family:"Trebuchet MS",Arial,sans-serif;font-weight:700}
+.pr{font-weight:700;color:var(--teal);margin-top:auto;padding-top:6px}
+.st{display:flex;justify-content:space-between;align-items:center;font-size:.85rem;border-top:1px dashed var(--line);margin-top:8px;padding-top:8px}
+.st b{padding:2px 10px;border-radius:12px;color:var(--white);font-size:.78rem}
+.ok .st b{background:var(--ok)}.low .st b{background:var(--low)}.out .st b{background:var(--out)}
+.out svg,.out h3{opacity:.45}
+
+footer{background:var(--ink);color:#b7c2cb;text-align:center;padding:24px 20px;font-size:.88rem}
+
+@media (max-width:900px){.grid{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:660px){.grid{grid-template-columns:repeat(2,1fr);gap:12px}.p svg{height:100px}}
+@media (max-width:380px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- Kumpulan gambar produk (SVG), dipakai ulang di kartu -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="bag" viewBox="0 0 100 80"><rect x="30" y="12" width="40" height="58" rx="4" fill="#fff"/><rect x="30" y="12" width="40" height="8" fill="currentColor"/><circle cx="50" cy="44" r="12" fill="currentColor"/><circle cx="46" cy="41" r="3" fill="#fff"/><circle cx="54" cy="41" r="3" fill="#fff"/></symbol>
+  <symbol id="can" viewBox="0 0 100 80"><rect x="34" y="18" width="32" height="46" rx="4" fill="#fff"/><rect x="34" y="18" width="32" height="7" fill="currentColor"/><rect x="34" y="57" width="32" height="7" fill="currentColor"/><circle cx="50" cy="41" r="8" fill="currentColor"/></symbol>
+  <symbol id="bone" viewBox="0 0 100 80"><rect x="30" y="34" width="40" height="12" fill="#fff"/><circle cx="28" cy="33" r="8" fill="#fff"/><circle cx="28" cy="47" r="8" fill="#fff"/><circle cx="72" cy="33" r="8" fill="#fff"/><circle cx="72" cy="47" r="8" fill="#fff"/></symbol>
+  <symbol id="bottle" viewBox="0 0 100 80"><rect x="42" y="8" width="16" height="10" fill="currentColor"/><rect x="38" y="18" width="24" height="52" rx="6" fill="#fff"/><rect x="38" y="36" width="24" height="18" fill="currentColor"/></symbol>
+  <symbol id="collar" viewBox="0 0 100 80"><circle cx="50" cy="38" r="24" fill="none" stroke="currentColor" stroke-width="8"/><circle cx="50" cy="66" r="7" fill="#fff"/></symbol>
+  <symbol id="fish" viewBox="0 0 100 80"><ellipse cx="46" cy="40" rx="24" ry="14" fill="#fff"/><path d="M68 40 L86 26 L86 54 Z" fill="currentColor"/><circle cx="36" cy="36" r="3" fill="currentColor"/></symbol>
+  <symbol id="tank" viewBox="0 0 100 80"><rect x="16" y="16" width="68" height="50" rx="4" fill="#fff" opacity=".5"/><rect x="16" y="30" width="68" height="36" fill="currentColor" opacity=".5"/><ellipse cx="46" cy="46" rx="10" ry="6" fill="#fff"/><path d="M56 46 L66 40 L66 52 Z" fill="#fff"/></symbol>
+  <symbol id="bowl" viewBox="0 0 100 80"><path d="M20 38 H80 Q78 62 50 62 Q22 62 20 38 Z" fill="#fff"/><rect x="16" y="34" width="68" height="6" rx="3" fill="currentColor"/></symbol>
+  <symbol id="cage" viewBox="0 0 100 80"><rect x="22" y="16" width="56" height="48" rx="4" fill="none" stroke="#fff" stroke-width="4"/><path d="M34 16V64M46 16V64M58 16V64M70 16V64" stroke="#fff" stroke-width="3"/><rect x="22" y="58" width="56" height="6" fill="currentColor"/></symbol>
+  <symbol id="bed" viewBox="0 0 100 80"><rect x="16" y="38" width="68" height="26" rx="12" fill="#fff"/><rect x="24" y="28" width="52" height="16" rx="8" fill="currentColor"/></symbol>
+  <symbol id="ball" viewBox="0 0 100 80"><circle cx="50" cy="40" r="22" fill="#fff"/><path d="M32 30 Q50 42 68 30 M32 50 Q50 38 68 50" stroke="currentColor" stroke-width="4" fill="none"/></symbol>
+  <symbol id="litter" viewBox="0 0 100 80"><path d="M18 34 H82 L74 66 H26 Z" fill="#fff"/><rect x="14" y="28" width="72" height="8" rx="3" fill="currentColor"/><circle cx="40" cy="48" r="3" fill="currentColor"/><circle cx="56" cy="54" r="3" fill="currentColor"/><circle cx="64" cy="46" r="3" fill="currentColor"/></symbol>
+</svg>
+
+<header>
+  <div class="wrap">
+    <div>
+      <h1>Petshop Sahabat Berbulu</h1>
+      <p>Daftar produk lengkap untuk kucing, anjing, ikan hias, dan perlengkapan hewan peliharaan, beserta stok terbaru.</p>
+    </div>
+    <div class="legend">
+      <span><i style="background:#4ade80"></i>Tersedia: 10 ke atas</span>
+      <span><i style="background:#facc15"></i>Menipis: 1 sampai 9</span>
+      <span><i style="background:#f87171"></i>Habis</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <input class="vis" type="radio" name="f" id="f-all" checked>
+  <input class="vis" type="radio" name="f" id="f-kucing">
+  <input class="vis" type="radio" name="f" id="f-anjing">
+  <input class="vis" type="radio" name="f" id="f-ikan">
+  <input class="vis" type="radio" name="f" id="f-aksesori">
+
+  <div class="tabs">
+    <label for="f-all">Semua</label>
+    <label for="f-kucing">Kucing</label>
+    <label for="f-anjing">Anjing</label>
+    <label for="f-ikan">Ikan</label>
+    <label for="f-aksesori">Aksesori</label>
+  </div>
+
+  <div class="grid">
+
+    <!-- KUCING -->
+    <article class="p kucing ok"><svg class="c1" viewBox="0 0 100 80"><use href="#bag"/></svg><div class="b"><small>Kucing</small><h3>Makanan Kucing Dewasa Tuna 1 kg</h3><p class="pr">Rp 58.000</p><p class="st"><span>Stok: 24</span><b>Tersedia</b></p></div></article>
+    <article class="p kucing low"><svg class="c1" viewBox="0 0 100 80"><use href="#bag"/></svg><div class="b"><small>Kucing</small><h3>Makanan Anak Kucing Ikan 1 kg</h3><p class="pr">Rp 62.000</p><p class="st"><span>Stok: 8</span><b>Menipis</b></p></div></article>
+    <article class="p kucing ok"><svg class="c4" viewBox="0 0 100 80"><use href="#can"/></svg><div class="b"><small>Kucing</small><h3>Makanan Basah Kucing Kaleng 400 g</h3><p class="pr">Rp 14.000</p><p class="st"><span>Stok: 40</span><b>Tersedia</b></p></div></article>
+    <article class="p kucing out"><svg class="c3" viewBox="0 0 100 80"><use href="#litter"/></svg><div class="b"><small>Kucing</small><h3>Pasir Kucing Gumpal 5 L</h3><p class="pr">Rp 45.000</p><p class="st"><span>Stok: 0</span><b>Habis</b></p></div></article>
+
+    <!-- ANJING -->
+    <article class="p anjing ok"><svg class="c2" viewBox="0 0 100 80"><use href="#bag"/></svg><div class="b"><small>Anjing</small><h3>Makanan Anjing Dewasa Ayam 1,5 kg</h3><p class="pr">Rp 75.000</p><p class="st"><span>Stok: 15</span><b>Tersedia</b></p></div></article>
+    <article class="p anjing ok"><svg class="c1" viewBox="0 0 100 80"><use href="#bone"/></svg><div class="b"><small>Anjing</small><h3>Tulang Kunyah Anjing 15 cm</h3><p class="pr">Rp 12.000</p><p class="st"><span>Stok: 32</span><b>Tersedia</b></p></div></article>
+    <article class="p anjing low"><svg class="c2" viewBox="0 0 100 80"><use href="#bottle"/></svg><div class="b"><small>Anjing</small><h3>Shampo Anjing Anti Kutu 250 ml</h3><p class="pr">Rp 38.000</p><p class="st"><span>Stok: 6</span><b>Menipis</b></p></div></article>
+    <article class="p anjing ok"><svg class="c4" viewBox="0 0 100 80"><use href="#collar"/></svg><div class="b"><small>Anjing</small><h3>Tali Tuntun dan Kalung Set</h3><p class="pr">Rp 55.000</p><p class="st"><span>Stok: 11</span><b>Tersedia</b></p></div></article>
+
+    <!-- IKAN -->
+    <article class="p ikan ok"><svg class="c2" viewBox="0 0 100 80"><use href="#fish"/></svg><div class="b"><small>Ikan</small><h3>Pakan Ikan Hias Pelet 100 g</h3><p class="pr">Rp 15.000</p><p class="st"><span>Stok: 50</span><b>Tersedia</b></p></div></article>
+    <article class="p ikan low"><svg class="c3" viewBox="0 0 100 80"><use href="#tank"/></svg><div class="b"><small>Ikan</small><h3>Akuarium Mini 30 cm</h3><p class="pr">Rp 185.000</p><p class="st"><span>Stok: 3</span><b>Menipis</b></p></div></article>
+    <article class="p ikan low"><svg class="c2" viewBox="0 0 100 80"><use href="#tank"/></svg><div class="b"><small>Ikan</small><h3>Filter Air Akuarium Celup</h3><p class="pr">Rp 65.000</p><p class="st"><span>Stok: 9</span><b>Menipis</b></p></div></article>
+
+    <!-- AKSESORI -->
+    <article class="p aksesori ok"><svg class="c1" viewBox="0 0 100 80"><use href="#bowl"/></svg><div class="b"><small>Aksesori</small><h3>Mangkuk Makan Stainless</h3><p class="pr">Rp 22.000</p><p class="st"><span>Stok: 28</span><b>Tersedia</b></p></div></article>
+    <article class="p aksesori low"><svg class="c3" viewBox="0 0 100 80"><use href="#cage"/></svg><div class="b"><small>Aksesori</small><h3>Kandang Lipat Ukuran Sedang</h3><p class="pr">Rp 320.000</p><p class="st"><span>Stok: 2</span><b>Menipis</b></p></div></article>
+    <article class="p aksesori low"><svg class="c4" viewBox="0 0 100 80"><use href="#bed"/></svg><div class="b"><small>Aksesori</small><h3>Kasur Hewan Empuk</h3><p class="pr">Rp 95.000</p><p class="st"><span>Stok: 7</span><b>Menipis</b></p></div></article>
+    <article class="p aksesori ok"><svg class="c2" viewBox="0 0 100 80"><use href="#ball"/></svg><div class="b"><small>Aksesori</small><h3>Mainan Bola Berbunyi</h3><p class="pr">Rp 9.000</p><p class="st"><span>Stok: 60</span><b>Tersedia</b></p></div></article>
+    <article class="p aksesori ok"><svg class="c1" viewBox="0 0 100 80"><use href="#collar"/></svg><div class="b"><small>Aksesori</small><h3>Kalung Lonceng Kucing</h3><p class="pr">Rp 15.000</p><p class="st"><span>Stok: 18</span><b>Tersedia</b></p></div></article>
+
+  </div>
+</main>
+
+<footer>Petshop Sahabat Berbulu &middot; Stok diperbarui manual oleh admin toko</footer>
+</body>
+</html>
